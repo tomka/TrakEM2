@@ -289,8 +289,10 @@ public class ExportMultilevelTiles
 				.append("\"offset_y_px\": 0,\n")
 				.append("\"offset_z_px\": ").append(indices.get(indices.firstKey()).getZ() * cal.pixelWidth / cal.pixelDepth).append(',').append('\n')
 				.append("\"missing_layers\": [");
-				for (final Integer i : missingIndices) sb.append(i - smallestIndex).append(',');
-				sb.setLength(sb.length()-1); // remove last comma
+				if (missingIndices.size() > 0) {
+					for (final Integer i : missingIndices) sb.append(i - smallestIndex).append(',');
+					sb.setLength(sb.length()-1); // remove last comma
+				}
 				sb.append("]}");
 				if (!Utils.saveToFile(new File(dir + "metadata.json"), sb.toString())) {
 					Utils.logAll("WARNING: could not save " + dir + "metadata.json\nThe contents was:\n" + sb.toString());
